@@ -1,8 +1,5 @@
 <?php
 
-require_once("library/bitly.php");
-require_once("library/Googl.class.php");
-
 /**
  * Number of tweets to scan
  */
@@ -26,12 +23,14 @@ $googl_key = '';
 $googl = false;
 if($googl_key != '')
 {
+    require_once("library/Googl.class.php");
     $googl = new Googl($googl_key);
 }
 
 $bitly = false;
 if($bitly_key != '' && $bitly_login != '')
 {
+    require_once("library/bitly.php");
     $bitly = new bitly($bitly_login,$bitly_key);
 }
 
@@ -71,6 +70,7 @@ $url = "http://search.twitter.com/search.json?q=%23$hash&include_entities=true&r
   */
 curl_close ($ch);
  
+$unq_urls = array();
 $rt = json_decode($json_contents);
 $ctr=0;
 if(!is_array($rt->results))
